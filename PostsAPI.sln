@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PostsAPI", "PostsAPI\PostsAPI.csproj", "{5C092C7E-CCF9-438A-8ABF-F36E8E5F5653}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PostsAPI", "PostsAPI\PostsAPI.csproj", "{5C092C7E-CCF9-438A-8ABF-F36E8E5F5653}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{B082F1B2-C625-4D37-B853-98468F7BB0A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{B082F1B2-C625-4D37-B853-98468F7BB0A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

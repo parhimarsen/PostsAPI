@@ -1,3 +1,4 @@
-<div *ngFor="let post of posts">
+<div *ngFor="let post of posts | async">
   <a href="{{ post.url }}">{{ post.title }}</a>
 </div>
+<button mat-button (click)="openDialog()">Add post</button>

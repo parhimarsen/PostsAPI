@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from './api.service';
-import { Subscriber, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { MyDialogComponent } from './my-dialog/my-dialog.component';
 
 export interface Post {
   id: number;
@@ -14,18 +16,21 @@ export interface Post {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  posts!: Post[];
-  subscriptions!: Subscription;
+  posts!: Observable<Post[]>;
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, public dialog: MatDialog) {}
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
   }
 
   ngOnInit() {
-    this.subscriptions = this.apiService.getPosts().subscribe((posts) => {
-      this.posts = posts;
+    this.posts = this.apiService.getPosts();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(MyDialogComponent, {
+      width: '500px',
+      data: { /* данные для передачи в диалог */ },
     });
   }
 }

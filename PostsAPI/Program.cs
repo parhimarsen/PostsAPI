@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Builder;
 using PostsAPI.Filters;
 using PostsAPI.Interfaces;
 using PostsAPI.Services;
+using static System.Net.Mime.MediaTypeNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,14 @@ builder.Services.AddScoped<IHackerNewsService, HackerNewsService>();
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add(typeof(ApiExceptionFilter));
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
 });
 
 builder.Services.AddLogging(config =>
@@ -29,7 +39,7 @@ var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-app.UseCors(builder => builder.AllowAnyOrigin());
+app.UseCors("AllowSpecificOrigin");
 
 app.MapControllers();
 
