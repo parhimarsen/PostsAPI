@@ -3,15 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   private apiUrl = 'https://localhost:7094/api';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getPosts(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/posts`);
+  getPosts(pageNumber: number, pageSize: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/posts`, { pageNumber, pageSize });
   }
 
   getPostDetails(id: number): Observable<any> {
@@ -19,6 +19,6 @@ export class ApiService {
   }
 
   addPost(postData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/posts`, postData);
+    return this.http.post(`${this.apiUrl}/posts/add`, postData);
   }
 }

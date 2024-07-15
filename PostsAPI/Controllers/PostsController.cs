@@ -2,6 +2,7 @@
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
 using PostsAPI.Interfaces;
+using PostsAPI.Models;
 
 namespace PostsAPI.Controllers
 {
@@ -19,10 +20,10 @@ namespace PostsAPI.Controllers
             _hackerNewsService = hackerNewsService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetPostsAsync()
+        [HttpPost("")]
+        public async Task<IActionResult> GetPostsAsync(PaginationModel model)
         {
-            var posts = _dbContext.GetPosts();
+            var posts = _dbContext.GetPosts().AsEnumerable();
             if (!posts.Any())
             {
                 var hackerPosts = await _hackerNewsService.GetLatestPostsAsync();
@@ -30,8 +31,10 @@ namespace PostsAPI.Controllers
                 {
                     _dbContext.AddPost(post);
                 }
-                posts = _dbContext.GetPosts();
             }
+            posts = _dbContext.GetPosts()
+                    .Skip(model.PageNumber * model.PageSize)
+                    .Take(model.PageSize);
             return Ok(posts);
         }
 
@@ -46,7 +49,7 @@ namespace PostsAPI.Controllers
             return Ok(post);
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public IActionResult AddPost(Post post)
         {
             _dbContext.AddPost(post);
